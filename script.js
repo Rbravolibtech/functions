@@ -360,3 +360,9 @@ const perGroup = 1000;
 boardPassengers(180, 3);
 
 /*==============CODING CHALLENGE 2==============*/
+// this code works bc you start out with a function CONST you are calling out a a variable in this case header and the header is A CLOSER LOOK AT FUNCTIONS query selector selects the first element in this case h1 which is the font size of the header then you declare it by typing what color it is the header in this case it is red is what is declared to be you can change the color and it will change to the color you choose
+
+(function () {
+  const header = document.querySelector('h1');
+  header.style.color = 'purple';
+})();
