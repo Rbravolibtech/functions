@@ -61,52 +61,108 @@ createBooking("LH123", undefined, 1000);
 // checkIn(flight, jonas);
 /*==============FUNCTIONS ACCEPTING CALLBACK FUNCTIONS ==============*/
 
-const oneWord = function (str) {
-  return str.replace(/ /g, '').toLowerCase();
+// const oneWord = function (str) {
+//   return str.replace(/ /g, '').toLowerCase();
+// };
+
+// const upperFirstWord = function (str) {
+//   const [first, ...others] = str.split(' ');
+//   return [first.toUpperCase(), ...others].join(' ');
+// };
+
+// //HIGHER-ORDER FUNCTION
+
+// const transformer = function (str, fn) {
+//   console.log(`Original string: ${str}`);
+
+//   console.log(`Transformed string: ${fn(str)}`);
+//   console.log(`Transformed by: ${fn.name}`);
+// };
+
+// transformer('JavaScript is the best!', upperFirstWord);
+
+// transformer('JavaScript is the best!', oneWord);
+
+// //JS USES CALLBACKS ALL THE TIME
+
+// const high5 = function () {
+//   console.log('😡');
+// };
+// document.body.addEventListener('click', high5);
+
+// ['Jonas', 'Bravo', 'Adam'].forEach(high5);
+// /*==============FUNCTIONS RETURNING FUNCTIONS==============*/
+
+// const greet = function (greeting) {
+//   return function (name) {
+//     console.log(`${greeting} ${name}`);
+//   };
+// };
+
+// const greeterHey = greet('Hey');
+// greeterHey('Jonas');
+// greeterHey('Steven');
+
+// greet('Hola')('Jonas');
+
+// //CHALLENGE
+
+// const greeterArr = greeting => name => console.log(`${greeting} ${name}`); //arrow function
+
+// greeterArr('Hi')('Jonas');
+
+/*==============THE CALL AND APPLY METHODS==============*/
+
+const delta = {
+  airline: 'Delta',
+  iataCode: 'LH',
+  bookings: [],
+  book(flightNum, name) {
+    console.log(
+      `${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`
+    );
+    this.bookings.push({ flight: `${this.iataCode}${flightNum}`, name });
+  },
 };
 
-const upperFirstWord = function (str) {
-  const [first, ...others] = str.split(' ');
-  return [first.toUpperCase(), ...others].join(' ');
+delta.book(239, 'Jonas Bravo');
+delta.book(258, 'Jonas Smith');
+
+const eurowings = {
+  airline: 'eurowings',
+  iataCode: 'Ew',
+  bookings: [],
 };
 
-//HIGHER-ORDER FUNCTION
+const book = delta.book;
 
-const transformer = function (str, fn) {
-  console.log(`Original string: ${str}`);
+//Does not work
+//book(23, 'Sarah Williams');
 
-  console.log(`Transformed string: ${fn(str)}`);
-  console.log(`Transformed by: ${fn.name}`);
+book.call(eurowings, 23, 'sarah Williams');
+console.log(eurowings);
+
+book.call(delta, 239, 'Mary Cooper');
+console.log(delta);
+
+const swiss = {
+  airline: 'Swiss Air Line',
+  iataCode: 'LX',
+  bookings: [],
 };
 
-transformer('JavaScript is the best!', upperFirstWord);
+book.call(swiss, 583, 'Mary Cooper');
+console.log(swiss);
 
-transformer('JavaScript is the best!', oneWord);
+//Apply method
 
-//JS USES CALLBACKS ALL THE TIME
+const flightData = [583, 'Tomb Brady'];
+book.apply(swiss, flightData);
+console.log(swiss);
 
-const high5 = function () {
-  console.log('😡');
-};
-document.body.addEventListener('click', high5);
+book.call(swiss, ...flightData);
 
-['Jonas', 'Bravo', 'Adam'].forEach(high5);
-/*==============FUNCTIONS RETURNING FUNCTIONS==============*/
+/*==============THE BIND METHOD ==============*/
 
-const greet = function (greeting) {
-  return function (name) {
-    console.log(`${greeting} ${name}`);
-  };
-};
-
-const greeterHey = greet('Hey');
-greeterHey('Jonas');
-greeterHey('Steven');
-
-greet('Hola')('Jonas');
-
-//CHALLENGE
-
-const greeterArr = greeting => name => console.log(`${greeting} ${name}`); //arrow function
-
-greeterArr('Hi')('Jonas');
+ The bind Method
+ book.call(eurowings, 23, 'Sarah Williams');
